@@ -1,74 +1,106 @@
-struct User {
-  active: bool,
-  username: String,
-  email: String,
-  sign_in_count: u64,
+// enum IpAddreKind {
+//   V4(u8, u8, u8, u8),
+//   V6(String)
+// }
+
+// #[derive(Debug)]
+// enum IpAddr {
+//   V4(u8, u8, u8, u8),
+//   V6(String)
+// }
+
+// fn main() {
+//   // let four = IpAddreKind::V4;
+//   // let six = IpAddreKind::V6;
+
+//   // route(four);
+//   // route(six);
+
+//   let home = IpAddr::V4(127, 0, 0, 1);
+
+//   let loopback = IpAddr::V6(String::from("::1"));
+//   println!("home: {:?}", home);
+//   println!("loopback: {:?}", loopback);
+
+// }
+
+// fn route(ip_kind: IpAddreKind) {
+
+// }
+
+// enum Message {
+//   Quit,
+//   Move { x: i32, y: i32 },
+//   Write(String),
+//   ChangeColor(i32, i32, i32),
+// }
+
+// impl Message {
+//   fn call(&self) {
+//     println!("Calling",)
+//   }
+// }
+
+// fn main() {
+//   let m =  Message::Write(String::from("Hello"));
+//   m.call();
+// }
+
+enum Option<T> {
+  None,
+  Some(T),
 }
-
-struct LiteralUser {
-  active: bool,
-  // username: &str,
-  // email: &str,
-  sign_in_count: u64,
-}
-
-struct Color(i32, i32, i32);
-struct Point(i32, i32, i32);
-
-struct AlwaysEqual;
-
 
 #[derive(Debug)]
-struct Rectangle {
-  width: u32,
-  height: u32,
+enum UsState {
+  Alabama,
+  Alaska
+}
+
+enum Coin {
+  Penny,
+  Nickel,
+  Dime,
+  Quarter(UsState)
 }
 
 fn main() {
-  // let mut user = User {
-  //   active: true,
-  //   username: String::from("fmgono"),
-  //   email: String::from("fmgonoo@gmail.com"),
-  //   sign_in_count: 1
-  // };
+  let some_number = Some(5);
+  let some_char = Some('E');
 
-  // user.email = String::from("anotheremail@gmail.com");
+  // let absent_number: Option<i32> = None;
 
-  // let user1 = build_user(String::from("revmaghfira@gmail.com"), String::from("username"));
-  // let user2 = build_user(user1.email, user.username);
+  // let x: i8 = 5;
+  // let y: Option<i8> = Some(5);
 
-  // let black = Color(0,0,0);
-  // let origin = Point(0,0,0);
+  let penny = Coin::Penny;
+  let quarter = Coin::Quarter(UsState::Alabama);
 
-  // let subject = AlwaysEqual;
+  value_in_cents(quarter);
 
-  // let literal_user = LiteralUser {
-  //   active: true,
-  //   email: "fmgonoo@gmail.com",
-  //   username: "fmgono",
-  //   sign_in_count: 1,
-  // };
-  let scale = 2;
-  let rect1 = Rectangle {
-    width: dbg!(30 * scale),
-    height: 30
-  };
-
-  // println!("The area of the rectangle is {} square pixels.", area(&rect1));
-  println!("The rectangle: {:?}", rect1);
-  dbg!(&rect1);
-
+  let five = Some(5);
+  // let six = plus_one(five);
+  // let none = plus_one(None);
 }
 
-fn build_user(email: String, username: String) -> User {
-  User {
-    active: true,
-    email,
-    username,
-    sign_in_count: 1
+fn value_in_cents(coin: Coin) -> u8 {
+  match coin {
+    Coin::Penny => {
+      println!("Lucky penny!");
+      1
+    },
+    Coin::Nickel => 5,
+    Coin::Dime => 10,
+    Coin::Quarter(state) => {
+      println!("State quarter from {:?}!", state);
+      25
+    },
   }
 }
 
-fn area(rectangle: &Rectangle) -> u32 {
-  rectangle.width * rectangle.height
+fn plus_one(x: Option<i32>) -> Option<i32> {
+  match x {
+    None => None,
+    Some(i) => Some(i + 1)
+  }
 }
